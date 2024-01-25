@@ -41,6 +41,8 @@ dependencies:
   camera: ^0.10.5+9
   # flutter_tflite: ^1.0.1
   tflite_v2: ^1.0.0
+  http: ^1.2.0
+  flutter_dotenv: ^5.1.0
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +70,7 @@ flutter:
   assets:
     - assets/labels.txt
     - assets/model_unquant.tflite
+    - lib/.env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

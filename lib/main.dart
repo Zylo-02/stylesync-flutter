@@ -2,10 +2,17 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:stylesync/connections/colour_finder.dart';
 import 'package:tflite_v2/tflite_v2.dart';
 
-void main() {
+// import 'package:tflite/tflite.dart';
+// import 'package:tflite_flutter/tflite_flutter.dart';
+// import 'pack
+
+Future main() async {
+  await dotenv.load(fileName: "lib/.env");
   runApp(MyApp());
 }
 
@@ -30,6 +37,7 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
   var _recognitions;
   var v = "";
   // var dataList = [];
+
   @override
   void initState() {
     super.initState();
@@ -75,6 +83,8 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
     print("//////////////////////////////////////////////////");
     int endTime = new DateTime.now().millisecondsSinceEpoch;
     print("Inference took ${endTime - startTime}ms");
+
+    // await ApiRequest.makeApiRequest(image.path);
   }
 
   @override
@@ -88,12 +98,14 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             if (_image != null)
-              Image.file(
-                File(_image!.path),
-                height: 200,
-                width: 200,
-                fit: BoxFit.cover,
-              )
+              ColorDisplayWidget(imagePath: file!.path)
+            //   Image.file(
+            //     File(_image!.path),
+            //     height: 200,
+            //     width: 200,
+            //     fit: BoxFit.cover,
+            //   ),
+
             else
               Text('No image selected'),
             SizedBox(height: 20),
