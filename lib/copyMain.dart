@@ -1,18 +1,13 @@
 import 'dart:io';
-import 'dart:math';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
 import 'package:path_provider/path_provider.dart';
-import 'package:stylesync/connections/colour_finder.dart';
-import 'package:stylesync/connections/colour_finder2.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
-Future main() async {
-  await dotenv.load(fileName: "lib/.env");
+void main() {
   runApp(MyApp());
 }
 
@@ -33,16 +28,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String modelPath =
       'assets/new_model.tflite'; // Replace with the actual TFLite model path
-  String imgPath = '';
-
-  bool isLoading = false;
 
   Future<void> processImage(File imageFile) async {
-    // Set loading state to true when processing starts
-    setState(() {
-      isLoading = true;
-    });
-
     File jpegImageFile = await convertToJpeg(imageFile);
 
     // Load the image
@@ -76,8 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
         List.generate(384 * 256, (index) => outputBuffer[index * 4 + 3]);
     print("7");
 
-    // Visualize the probability map and the segmented image
-    // visualizeProbabilityMapAndSegmentedImage(resizedImage, probabilityMap);
+    // Visualize the probability map and the binary mask
+    visualizeProbabilityMapAndMask(resizedImage, probabilityMap);
 
     // Postprocess the probability map
     var clothMask = List.generate(
@@ -86,79 +73,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     var segmentedCloth = createSegmentedCloth(resizedImage, clothMask);
     print("9");
-
-// Create a segmented image
-    var segmentedImage = img.Image(width: 256, height: 384);
-    for (int y = 0; y < 384; y++) {
-      for (int x = 0; x < 256; x++) {
-        if (clothMask[y * 256 + x] == 1) {
-          var pixel = resizedImage.getPixel(x, y);
-          segmentedImage.setPixel(
-            x,
-            y,
-            img.ColorRgba8(
-              pixel.r.toInt(),
-              pixel.g.toInt(),
-              pixel.b.toInt(),
-              255,
-            ),
-          );
-        }
-      }
-    }
-
-    setState(() {
-      isLoading = false;
-    });
-    // Convert the image to bytes
-    List<int> imageBytes = img.encodePng(segmentedImage);
-
-// Get the app's documents directory
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-
-// Generate a unique file name
-    String fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.png';
-
-// Create a new file with the generated file name
-    File imageFile2 = File('${appDocDir.path}/$fileName');
-
-// Write the image bytes to the file
-    await imageFile2.writeAsBytes(imageBytes);
-
-// Now you have the file path of the saved image
-    imgPath = imageFile2.path;
-    // Display the images in an alert dialog
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Probability Map and Segmented Image'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Image.memory(img.encodePng(colorImage)),
-              Image.memory(img.encodePng(segmentedImage)),
-            ],
-          ),
-          actions: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Close'),
-            ),
-          ],
-        );
-      },
-    );
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ColorDisplayPage(
-            imagePath: imgPath, oriImagePath: jpegImageFile.path),
-      ),
-    );
 
     // Rest of the code remains the same
 
@@ -170,37 +84,36 @@ class _MyHomePageState extends State<MyHomePage> {
     print("Output Type: ${interpreter.getOutputTensor(0).type}");
 
     // Get the app's writable directory
-    // Directory appDocDir = await getApplicationDocumentsDirectory();
-    // String appDocPath = appDocDir.path;
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
 
-    // // Save the segmented image
-    // String filePath = '$appDocPath/segmented_cloth_flutter.png';
-    // img.Image segmentedImage = img.Image.fromBytes(
-    //   width: 256,
-    //   height: 384,
-    //   bytes: Float32List.fromList(segmentedCloth).buffer,
-    // );
-    // await File(filePath).writeAsBytes(img.encodePng(segmentedImage));
-    // print("9");
+    // Save the segmented image
+    String filePath = '$appDocPath/segmented_cloth_flutter.png';
+    img.Image segmentedImage = img.Image.fromBytes(
+      width: 256,
+      height: 384,
+      bytes: Float32List.fromList(segmentedCloth).buffer,
+    );
+    await File(filePath).writeAsBytes(img.encodePng(segmentedImage));
+    print("9");
 
-    // // Display the segmented image in an alert dialog
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) {
-    //     return AlertDialog(
-    //       content: Image.file(File('$appDocPath/segmented_cloth_flutter.png')),
-    //       actions: <Widget>[
-    //         ElevatedButton(
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //           },
-    //           child: Text('Close'),
-    //         ),
-    //       ],
-    //     );
-    //   },
-    // );
-
+    // Display the segmented image in an alert dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Image.file(File('$appDocPath/segmented_cloth_flutter.png')),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
     // Dispose of the interpreter
     interpreter.close();
   }
@@ -333,23 +246,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fashion Flow - Zylo/Salah'),
+        title: Text('Flutter TFLite Example'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                getImageFromGallery();
-              },
-              child: Text('Select Image from Gallery'),
-            ),
-            SizedBox(height: 20), // Add some spacing
-            isLoading
-                ? CircularProgressIndicator() // Show loading indicator when processing
-                : SizedBox(), // Empty SizedBox when not loading
-          ],
+        child: ElevatedButton(
+          onPressed: getImageFromGallery,
+          child: Text('Select Image from Gallery'),
         ),
       ),
     );
