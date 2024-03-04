@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stylesync/futures/authentication/controllers.onboarding/onboarding_controller.dart';
 import 'package:stylesync/futures/authentication/screens/onboarding/widgets/onboarding_dot_navigation.dart';
+import 'package:stylesync/futures/authentication/screens/onboarding/widgets/onboarding_next_button.dart';
 import 'package:stylesync/futures/authentication/screens/onboarding/widgets/onboarding_page.dart';
 import 'package:stylesync/futures/authentication/screens/onboarding/widgets/onboarding_skip.dart';
 import 'package:stylesync/utils/constants/colors.dart';
@@ -17,65 +19,43 @@ class OnBoardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(OnBoardingController());
+
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Onboarding'),
-        ),
         body: Stack(
-          children: [
-            /// Horizontal Scrollable Pages
-            PageView(
-              children: const [
-                OnBoardingPage(
-                  image: TImages.onBoardingImage1,
-                  title: TTexts.onBoardingTitle1,
-                  subTitle: TTexts.onBoardingSubTitle1,
-                ),
-                OnBoardingPage(
-                  image: TImages.onBoardingImage2,
-                  title: TTexts.onBoardingTitle2,
-                  subTitle: TTexts.onBoardingSubTitle2,
-                ),
-                OnBoardingPage(
-                  image: TImages.onBoardingImage3,
-                  title: TTexts.onBoardingTitle3,
-                  subTitle: TTexts.onBoardingSubTitle3,
-                ),
-              ],
+      children: [
+        /// Horizontal Scrollable Pages
+        PageView(
+          controller: controller.pageController,
+          onPageChanged: controller.updatePageIndicator,
+          children: const [
+            OnBoardingPage(
+              image: TImages.onBoardingImage1,
+              title: TTexts.onBoardingTitle1,
+              subTitle: TTexts.onBoardingSubTitle1,
             ),
-
-            /// Skip Button
-            const OnBoardingSkip(),
-
-            /// Dot Navigation SmoothPageIndicator
-            const OnBoardingDotNavigation(),
-
-            ///Circular Button
-            OnBoardingNextButton()
+            OnBoardingPage(
+              image: TImages.onBoardingImage2,
+              title: TTexts.onBoardingTitle2,
+              subTitle: TTexts.onBoardingSubTitle2,
+            ),
+            OnBoardingPage(
+              image: TImages.onBoardingImage3,
+              title: TTexts.onBoardingTitle3,
+              subTitle: TTexts.onBoardingSubTitle3,
+            ),
           ],
-        ));
-  }
-}
+        ),
 
-class OnBoardingNextButton extends StatelessWidget {
-  const OnBoardingNextButton({
-    super.key,
-  });
+        /// Skip Button
+        const OnBoardingSkip(),
 
-  @override
-  Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+        /// Dot Navigation SmoothPageIndicator
+        const OnBoardingDotNavigation(),
 
-    return Positioned(
-      right: TSizes.defaultSpace,
-      bottom: TDeviceUtils.getBottomNavigationBarHeight(context),
-      child: ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-            shape: const CircleBorder(),
-            backgroundColor: dark ? TColors.primary : Colors.black),
-        child: Icon(Iconsax.arrow_right3),
-      ),
-    );
+        ///Circular Button
+        OnBoardingNextButton()
+      ],
+    ));
   }
 }
