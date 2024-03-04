@@ -6,11 +6,11 @@ class TTexts {
       "This is the first step of your journey";
   static const String onBoardingTitle3 = "Let's get started";
 
-  static const String onBoardingSubtitle1 =
+  static const String onBoardingSubTitle1 =
       "This is the subtitle for the first onboarding screen";
-  static const String onBoardingSubtitle2 =
+  static const String onBoardingSubTitle2 =
       "This is the subtitle for the second onboarding screen";
-  static const String onBoardingSubtitle3 =
+  static const String onBoardingSubTitle3 =
       "This is the subtitle for the third onboarding screen";
 
   //Home
