@@ -15,4 +15,13 @@ class TImages {
       'assets/images/on_boarding_images/Logo2.jpg';
   static const String onBoardingImage3 =
       'assets/images/on_boarding_images/logo3.jpg';
+
+  // -- Animations
+  static const String productsIllustration = 'assets/animations/ani1.jpg';
+  static const String productsSaleIllustration = 'assets/animations/ani2.jpg';
+  static const String staticSuccessIllustration = 'assets/animations/ani1.jpg';
+  static const String deliveredInPlaneIllustration =
+      'assets/animations/ani2.jpg';
+  static const String deliveredEmailIllustration = 'assets/animations/ani1.jpg';
+  static const String verifyIllustration = 'assets/animations/ani2.jpg';
 }
