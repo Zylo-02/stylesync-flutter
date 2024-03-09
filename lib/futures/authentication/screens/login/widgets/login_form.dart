@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:stylesync/futures/authentication/screens/password_configuration/forget_password.dart';
 import 'package:stylesync/futures/authentication/screens/signup/signup.dart';
 import 'package:stylesync/utils/constants/sizes.dart';
 import 'package:stylesync/utils/constants/text_strings.dart';
@@ -39,14 +40,19 @@ class TLoginForm extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Checkbox(value: true, onChanged: (value) {}),
+                Row(
+                  children: [
+                    Checkbox(value: true, onChanged: (value) {}),
+                  ],
+                ),
                 const Text(TTexts.rememberMe),
               ],
             ),
 
             /// Forget Password
             TextButton(
-                onPressed: () {}, child: const Text(TTexts.forgotPassword)),
+                onPressed: () => Get.to(() => const ForgetPassword()),
+                child: const Text(TTexts.forgotPassword)),
 
             const SizedBox(height: TSizes.spaceBtwSections),
 
