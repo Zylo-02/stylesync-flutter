@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:stylesync/futures/authentication/screens/password_configuration/forget_password.dart';
 import 'package:stylesync/futures/authentication/screens/signup/signup.dart';
+import 'package:stylesync/navigation_menu.dart';
 import 'package:stylesync/utils/constants/sizes.dart';
 import 'package:stylesync/utils/constants/text_strings.dart';
 
@@ -60,7 +61,8 @@ class TLoginForm extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                  onPressed: () {}, child: const Text(TTexts.signIn)),
+                  onPressed: () => Get.to(() => const NavigationMenu()),
+                  child: const Text(TTexts.signIn)),
             ),
             const SizedBox(height: TSizes.spaceBtwItems),
 
