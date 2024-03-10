@@ -14,8 +14,8 @@ class TTexts {
       "This is the subtitle for the third onboarding screen";
 
   //Home
-  static const String homeAppbarTitle = "Home";
-  static const String homeAppbarSubTitle = "Home2";
+  static const String homeAppbarTitle = "Good day for shopping";
+  static const String homeAppbarSubTitle = "Customer Name";
 
   // Authentication Form Text
   static const String firstName = "First Name";
