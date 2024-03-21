@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:stylesync/futures/ai/screens/user_image/get_userimage.dart';
 import 'package:stylesync/futures/shop/screens/home/home.dart';
 import 'package:stylesync/utils/constants/colors.dart';
 import 'package:stylesync/utils/helpers/helper_functions.dart';
@@ -27,6 +28,7 @@ class NavigationMenu extends StatelessWidget {
               : TColors.black.withOpacity(0.1),
           destinations: const [
             NavigationDestination(icon: Icon(Iconsax.home), label: "Home"),
+            NavigationDestination(icon: Icon(Iconsax.magic_star), label: "AI"),
             NavigationDestination(icon: Icon(Iconsax.home), label: "Store"),
             NavigationDestination(icon: Icon(Iconsax.home), label: "Wishlist"),
             NavigationDestination(icon: Icon(Iconsax.home), label: "Profile"),
@@ -43,6 +45,7 @@ class NavigationController extends GetxController {
 
   final screens = [
     const HomeScreen(),
+    const GetUserImageScreen(),
     Container(color: Colors.purple),
     Container(color: Colors.orange),
     Container(color: Colors.blue)

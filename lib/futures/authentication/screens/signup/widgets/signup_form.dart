@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:stylesync/futures/authentication/screens/signup/verify_email.dart';
 import 'package:stylesync/futures/authentication/screens/signup/widgets/terms_and_conditions_checkbox.dart';
+import 'package:stylesync/futures/authentication/screens/signup/widgets/usertype_drowpdown.dart';
 import 'package:stylesync/utils/constants/colors.dart';
 import 'package:stylesync/utils/constants/sizes.dart';
 import 'package:stylesync/utils/constants/text_strings.dart';
@@ -50,17 +51,32 @@ class TSignupForm extends StatelessWidget {
                 labelText: TTexts.userName,
                 prefixIcon: Icon(Iconsax.user_edit)),
           ),
+          const SizedBox(
+            height: TSizes.spaceBtwItems,
+          ),
 
           /// Email
           TextFormField(
             decoration: const InputDecoration(
                 labelText: TTexts.email, prefixIcon: Icon(Iconsax.direct)),
           ),
+          const SizedBox(
+            height: TSizes.spaceBtwItems,
+          ),
 
           /// Phone number
           TextFormField(
             decoration: const InputDecoration(
                 labelText: TTexts.phoneNumber, prefixIcon: Icon(Iconsax.call)),
+          ),
+          const SizedBox(
+            height: TSizes.spaceBtwItems,
+          ),
+
+          /// User type
+          const TUsertype_dropdown(),
+          const SizedBox(
+            height: TSizes.spaceBtwItems,
           ),
 
           /// Password
@@ -72,7 +88,7 @@ class TSignupForm extends StatelessWidget {
                 suffixIcon: Icon(Iconsax.eye_slash)),
           ),
 
-          const SizedBox(height: TSizes.spaceBtwSections),
+          const SizedBox(height: TSizes.spaceBtwItems),
 
           /// Terms&conditions Checkbox
           const TTermsAndConditionCheckBox(),

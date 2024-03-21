@@ -42,6 +42,13 @@ class TTexts {
   static const String submit = "Submit";
   static const String done = "Done";
 
+  // User type dropdown text
+  static const String userType = "Select User type";
+  static const String userTypeCustomer = "Customer";
+  static const String userTypeCustomerValue = "1";
+  static const String userTypeMerchant = "Merchant";
+  static const String userTypeMerchantValue = "2";
+
   // Authentication Headings Text
 
   static const String loginScreenTitle = "Welcome back!";
@@ -63,4 +70,8 @@ class TTexts {
       "Your Account has been created!";
   static const String yourAccountCreatedSubTitle =
       "We have sent you an email with a verification code. Please check your email.";
+
+  // User Image Select Text
+  static const String getGalleryImage = "Get image from gallery";
+  static const String getCameraImage = "Take a picture";
 }
