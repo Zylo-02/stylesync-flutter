@@ -74,4 +74,6 @@ class TTexts {
   // User Image Select Text
   static const String getGalleryImage = "Get image from gallery";
   static const String getCameraImage = "Take a picture";
+  static const String getUserInputTitle =
+      "Get complimentary images with the help of AI";
 }
