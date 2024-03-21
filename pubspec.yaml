@@ -89,8 +89,8 @@ flutter:
   assets:
     - assets/labels.txt
     - assets/model_unquant.tflite
-    - lib/.env
-    - assets/new_model.tflite
+    # - lib/.env
+    # - assets/new_model.tflite
     - assets/logos/
     - assets/images/on_boarding_images/
     - assets/images/animations/
