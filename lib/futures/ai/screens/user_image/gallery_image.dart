@@ -2,6 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:stylesync/common/widgets/buttons/elevated_button.dart';
+import 'package:stylesync/common/widgets/buttons/outlined_button.dart';
+import 'package:stylesync/utils/constants/colors.dart';
+import 'package:stylesync/utils/constants/sizes.dart';
+import 'package:stylesync/utils/constants/text_strings.dart';
 
 class GalleryImage extends StatefulWidget {
   const GalleryImage({super.key});
@@ -14,8 +19,8 @@ class _GalleryImageState extends State<GalleryImage> {
   File? _image;
 
   Future<void> _getImage() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
       setState(() {
@@ -28,7 +33,7 @@ class _GalleryImageState extends State<GalleryImage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pick Image from Gallery'),
+        title: const Text(TTexts.getGalleryImageTitle),
       ),
       body: Center(
         child: Column(
@@ -37,10 +42,13 @@ class _GalleryImageState extends State<GalleryImage> {
             if (_image != null)
               Image.file(_image!)
             else
-              Text('No image selected.'),
-            ElevatedButton(
+              const Text(TTexts.noImageSelected),
+            TOutlinedButton(
               onPressed: _getImage,
-              child: Text('Pick Image from Gallery'),
+              text: TTexts.getGalleryImage,
+              padding: TSizes.padding,
+              backgroundColor: TColors.buttonPrimary,
+              textColor: TColors.white,
             ),
           ],
         ),

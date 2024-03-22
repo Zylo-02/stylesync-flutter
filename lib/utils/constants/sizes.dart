@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class TSizes {
   //Padding and margin sizes
@@ -68,4 +69,8 @@ class TSizes {
 
   //Grid view spacing
   static const double gridViewSpacing = 16.0;
+
+  //Button padding size
+  static const EdgeInsetsGeometry padding =
+      EdgeInsets.symmetric(horizontal: TSizes.lg);
 }
