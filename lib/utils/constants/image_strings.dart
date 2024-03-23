@@ -28,4 +28,7 @@ class TImages {
   static const String deliveredEmailIllustration =
       'assets/images/animations/ani1.jpg';
   static const String verifyIllustration = 'assets/images/animations/ani2.jpg';
+
+  // -- Categories
+  static const String clothIcon = 'assets/icons/tshirt.png';
 }
