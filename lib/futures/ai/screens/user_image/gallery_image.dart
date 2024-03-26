@@ -1,9 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:stylesync/common/widgets/buttons/elevated_button.dart';
+import 'package:get/get.dart';
+
 import 'package:stylesync/common/widgets/buttons/outlined_button.dart';
+import 'package:stylesync/futures/ai/controllers/image/image_gallery_controller.dart';
+import 'package:stylesync/futures/ai/screens/user_image/widgets/selected_image.dart';
 import 'package:stylesync/utils/constants/colors.dart';
 import 'package:stylesync/utils/constants/sizes.dart';
 import 'package:stylesync/utils/constants/text_strings.dart';
@@ -16,41 +16,75 @@ class GalleryImage extends StatefulWidget {
 }
 
 class _GalleryImageState extends State<GalleryImage> {
-  File? _image;
-
-  Future<void> _getImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
-    if (image != null) {
-      setState(() {
-        _image = File(image.path);
-      });
-    }
-  }
-
+  final ImagePickerControllerGallery controller =
+      Get.put(ImagePickerControllerGallery());
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(TTexts.getGalleryImageTitle),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            if (_image != null)
-              Image.file(_image!)
-            else
-              const Text(TTexts.noImageSelected),
-            TOutlinedButton(
-              onPressed: _getImage,
-              text: TTexts.getGalleryImage,
-              padding: TSizes.padding,
-              backgroundColor: TColors.buttonPrimary,
-              textColor: TColors.white,
-            ),
-          ],
+    return PopScope(
+      onPopInvoked: (bool result) {
+        if (result) {
+          controller.clearImage();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(TTexts.getGalleryImageTitle),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              /// Show the selected Image
+              Obx(() {
+                if (controller.image != null) {
+                  return TShowSelectedImage(
+                    image: controller.image!,
+                    onPressed: () {},
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              }),
+              const SizedBox(height: TSizes.sm),
+
+              ///  Show the button to change the image
+              Obx(() {
+                if (controller.image != null) {
+                  return TOutlinedButton(
+                    onPressed: controller.getImageGallery,
+                    text: TTexts.changePicture,
+                    padding: TSizes.padding,
+                    backgroundColor: TColors.buttonPrimary,
+                    textColor: TColors.black,
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              }),
+              const SizedBox(height: TSizes.spaceBtwInputFields),
+
+              /// If no image is selected, show the button to get the image
+              Obx(() {
+                if (controller.image == null) {
+                  return Column(
+                    children: [
+                      const Text(TTexts.noImageSelected),
+                      const SizedBox(height: 16.0),
+                      TOutlinedButton(
+                        onPressed: controller.getImageGallery,
+                        text: TTexts.getGalleryImage,
+                        padding: TSizes.padding,
+                        backgroundColor: TColors.buttonPrimary,
+                        textColor: TColors.white,
+                      ),
+                    ],
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              }),
+            ],
+          ),
         ),
       ),
     );

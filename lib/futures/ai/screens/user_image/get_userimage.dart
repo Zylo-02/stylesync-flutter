@@ -38,7 +38,7 @@ class GetUserImageScreen extends StatelessWidget {
           ),
           const SizedBox(height: TSizes.spaceBtwItems),
           TOutlinedButton(
-            onPressed: () => Get.to(() => const CameraImage()),
+            onPressed: () => Get.to(() => CameraImage()),
             backgroundColor: Colors.red,
             textColor: TColors.white,
             text: TTexts.getCameraImage,
