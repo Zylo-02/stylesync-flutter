@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stylesync/common/widgets/buttons/outlined_button.dart';
-import 'package:stylesync/futures/ai/controllers/image/image_camera_controller.dart';
-import 'package:stylesync/futures/ai/controllers/image/image_gallery_controller.dart';
+import 'package:stylesync/futures/ai/controllers/image.controllers/image_camera_controller.dart';
+import 'package:stylesync/futures/ai/controllers/image.controllers/image_gallery_controller.dart';
+import 'package:stylesync/futures/ai/screens/infearence/inference.dart';
 import 'package:stylesync/futures/ai/screens/user_image/widgets/selected_image.dart';
 import 'package:stylesync/utils/constants/colors.dart';
 import 'package:stylesync/utils/constants/sizes.dart';
@@ -39,7 +40,8 @@ class _CameraImageState extends State<CameraImage> {
                 if (controller.image != null) {
                   return TShowSelectedImage(
                     image: controller.image!,
-                    onPressed: () {},
+                    onPressed: () =>
+                        Get.to(() => Inference(), arguments: controller.image!),
                   );
                 } else {
                   return const SizedBox();

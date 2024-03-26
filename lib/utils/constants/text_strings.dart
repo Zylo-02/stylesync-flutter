@@ -81,4 +81,9 @@ class TTexts {
   static const String letsGo = "Let's Go";
   static const String noImageSelected = "No image selected.";
   static const String changePicture = "Change Picture";
+  static const String inferenceTitle = "Inference";
+  static const String selectedImage = "Selected Image";
+  static const String segmentedImage = "Segmented Image";
+  static const String imageProcessingInference = "Image processing...";
+  static const String identifyingColor = "Identifying Colours...";
 }

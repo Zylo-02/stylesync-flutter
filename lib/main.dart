@@ -6,6 +6,8 @@ import 'package:stylesync/utils/theme/theme.dart';
 
 void main() {
   // Todo: Add widgets binding
+  // Remove the unused variable 'widgetsBinding'
+  WidgetsFlutterBinding.ensureInitialized();
   // Todo: Init Local Storage
   // Todo: Await Native Splash
   // Todo: Init Firebase
