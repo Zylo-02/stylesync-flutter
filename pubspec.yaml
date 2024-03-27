@@ -61,6 +61,7 @@ dependencies:
   google_mlkit_text_recognition: ^0.11.0
   google_ml_kit: ^0.16.3
   iconsax: ^0.0.8
+  http_parser: ^4.0.2
 
 
 dev_dependencies:
@@ -97,6 +98,7 @@ flutter:
     - assets/icons/
     - assets/images/banners/
     - assets/new_model.tflite
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:stylesync/app.dart';
-import 'package:stylesync/utils/constants/colors.dart';
-import 'package:stylesync/utils/theme/theme.dart';
 
-void main() {
-  // Todo: Add widgets binding
-  // Remove the unused variable 'widgetsBinding'
+Future<void> main() async {
+  // Ensure that Flutter's widgets binding is initialized
   WidgetsFlutterBinding.ensureInitialized();
-  // Todo: Init Local Storage
-  // Todo: Await Native Splash
-  // Todo: Init Firebase
-  // Todo: Initialize Authentication
 
+  // Load the .env file
+  await dotenv.load(fileName: ".env");
+
+  // TODO: Initialize Local Storage
+  // TODO: Await Native Splash
+  // TODO: Initialize Firebase
+  // TODO: Initialize Authentication
+
+  // Run your Flutter application
   runApp(const App());
 }

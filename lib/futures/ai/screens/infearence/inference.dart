@@ -38,7 +38,6 @@ class Inference extends StatelessWidget {
           ImageProcessingWidget(
             processImageFuture: () => helperFunctions.processImage(imageData!),
             onDataReceived: (data) {
-              // Adding a delay of 2 seconds before navigating
               Future.delayed(const Duration(seconds: 0), () {
                 helperFunctions.handleDataReceived(data);
               });
